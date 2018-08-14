@@ -2,15 +2,19 @@ package main
 
 import (
 	"fmt"
-	"net"
 	"os"
 )
 
 import (
 	"github.com/davecgh/go-spew/spew"
+	"github.com/go-ini/ini"
+	"github.com/mozillazg/request"
+	"io/ioutil"
+	"net"
+	"net/http"
 	"strconv"
+	"strings"
 )
-
 
 const (
 	CONN_HOST = "0.0.0.0"
@@ -18,8 +22,72 @@ const (
 	CONN_TYPE = "tcp"
 )
 
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+
+/*
+	read config from EWS poster for DTAGs Early warning system and T-Pot
+*/
+func readConfig() (string, string, string, string) {
+
+	cfg, err := ini.Load("/etc/ews.cfg")
+	if err != nil {
+		fmt.Printf("Fail to read file: %v", err)
+		os.Exit(1)
+	}
+
+	target := cfg.Section("EWS").Key("rhost_first").String()
+	user := cfg.Section("EWS").Key("username").String()
+	password := cfg.Section("EWS").Key("password").String()
+	nodeid := cfg.Section("GLASTOPFV3").Key("nodeid").String()
+	nodeid = strings.Replace(nodeid, "glastopfv3-", "medpot-", -1)
+	return target, user, password, nodeid
+
+}
+
+/*
+
+[EWS]
+ews = true
+username = community-01-user
+token = foth{a5maiCee8fineu7
+rhost_first = https://community.sicherheitstacho.eu/ews-0.1/alert/postSimpleMessage
+rhost_second = https://community.sicherheitstacho.eu/ews-0.1/alert/postSimpleMessage
+ignorecert = false
+
+[GLASTOPFV3]
+glastopfv3 = true
+nodeid = glastopfv3-community-01
+
+
+*/
+
+func post(target string, user string, password string, nodeid string) {
+
+	c := &http.Client{}
+	req := request.NewRequest(c)
+
+	dat, err := ioutil.ReadFile("./template/ews.xml")
+
+	// not set Content-Type
+	req.Body = strings.NewReader(string(dat))
+	resp, err := req.Post("http://127.0.0.1:9922/ews-0.1/alert/postSimpleMessage")
+
+	if err != nil {
+		fmt.Println("Error http post:", err.Error())
+	} else {
+		fmt.Println("Http Reponse", resp.Status)
+	}
+
+}
 func main() {
 	// Listen for incoming connections.
+
+	target, user, password, nodeid := readConfig()
+	post(target, user, password, nodeid)
 
 	l, err := net.Listen(CONN_TYPE, ":"+CONN_PORT)
 
@@ -29,7 +97,6 @@ func main() {
 	}
 	// Close the listener when the application closes.
 	defer l.Close()
-
 
 	fmt.Println("Listening on " + CONN_HOST + ":" + CONN_PORT)
 	for {
