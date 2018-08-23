@@ -71,9 +71,12 @@ func post(target string, user string, password string, nodeid string) {
 	req := request.NewRequest(c)
 
 	dat, err := ioutil.ReadFile("./template/ews.xml")
+	body := strings.Replace(string(dat), "_USERNAME_", user, -1)
+	body = strings.Replace(body, "_TOKEN_", password, -1)
+	body = strings.Replace(body, "_NODEID_", nodeid, -1)
 
 	// not set Content-Type
-	req.Body = strings.NewReader(string(dat))
+	req.Body = strings.NewReader(string(body))
 	resp, err := req.Post("http://127.0.0.1:9922/ews-0.1/alert/postSimpleMessage")
 
 	if err != nil {
