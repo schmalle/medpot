@@ -17,7 +17,7 @@ import (
 )
 
 const (
-	CONN_HOST = "0.0.0.0"
+	CONN_HOST = "127.0.0.1"
 	CONN_PORT = "2575"
 	CONN_TYPE = "tcp"
 )
@@ -48,22 +48,7 @@ func readConfig() (string, string, string, string) {
 
 }
 
-/*
 
-[EWS]
-ews = true
-username = community-01-user
-token = foth{a5maiCee8fineu7
-rhost_first = https://community.sicherheitstacho.eu/ews-0.1/alert/postSimpleMessage
-rhost_second = https://community.sicherheitstacho.eu/ews-0.1/alert/postSimpleMessage
-ignorecert = false
-
-[GLASTOPFV3]
-glastopfv3 = true
-nodeid = glastopfv3-community-01
-
-
-*/
 
 func post(target string, user string, password string, nodeid string) {
 
@@ -89,8 +74,9 @@ func post(target string, user string, password string, nodeid string) {
 func main() {
 	// Listen for incoming connections.
 
-	target, user, password, nodeid := readConfig()
-	post(target, user, password, nodeid)
+	//target, user, password, nodeid := readConfig()
+
+	//post(target, user, password, nodeid)
 
 	l, err := net.Listen(CONN_TYPE, ":"+CONN_PORT)
 
