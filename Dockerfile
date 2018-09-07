@@ -8,13 +8,7 @@ RUN apk -U --no-cache add \
                    git \
                    go \
                    g++
-
-RUN wget -O dep.zip https://github.com/golang/dep/releases/download/v0.3.0/dep-linux-amd64.zip && \
-    echo '96c191251164b1404332793fb7d1e5d8de2641706b128bf8d65772363758f364  dep.zip' | sha256sum -c - && \
-    unzip -d /usr/bin dep.zip && rm dep.zip
-
-
-RUN dep ensure -vendor-only
+RUN which go
 
 # Setup go, medpot
 RUN    export GOPATH=/opt/go/ && \
@@ -22,8 +16,15 @@ RUN    export GOPATH=/opt/go/ && \
     mkdir /opt/go && \
     cd /opt/go && \
     mkdir ./src && cd src && \
-    git clone https://github.com/schmalle/medpot.git && \
-    cd medpot
+    git clone https://github.com/schmalle/medpot.git
+
+
+
+RUN export GOPATH=/opt/go/ && go get -d -v github.com/davecgh/go-spew/spew
+RUN export GOPATH=/opt/go/ && go get -d -v github.com/go-ini/ini
+RUN export GOPATH=/opt/go/ && go get -d -v github.com/mozillazg/request
+
+RUN export GOPATH=/opt/go/ && cd /opt/go/src/medpot && go build medpot && cp ./medpot /usr/bin
 
 # Setup user, groups and configs
 RUN    addgroup -g 2000 medpot && \
@@ -40,7 +41,6 @@ RUN    apk del --purge build-base \
            /root/dist
 
 # Start medpot
-WORKDIR /opt/go/medpot
+WORKDIR /opt/go/src/medpot
 USER medpot:medpot
-CMD dep ensure
-# CMD exec bin/server -i $(/sbin/ip address | grep '^2: ' | awk '{ print $2 }' | tr -d [:punct:]) -l /var/log/glutton/glutton.log
+CMD exec medpot
