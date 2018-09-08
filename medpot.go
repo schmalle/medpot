@@ -1,18 +1,20 @@
 package main
 
-
-
 import (
+	"encoding/base64"
+	"encoding/json"
 	"fmt"
-	"os"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/go-ini/ini"
 	"github.com/mozillazg/request"
+	"go.uber.org/zap"
 	"io/ioutil"
 	"net"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 const (
@@ -47,8 +49,6 @@ func readConfig() (string, string, string, string) {
 
 }
 
-
-
 func post(target string, user string, password string, nodeid string) {
 
 	c := &http.Client{}
@@ -70,12 +70,41 @@ func post(target string, user string, password string, nodeid string) {
 	}
 
 }
+
+func initLogger() *zap.Logger {
+
+	rawJSON := []byte(`{
+	  "level": "debug",
+	  "encoding": "json",
+	  "outputPaths": ["stdout", "/var/log/medpot.log"],
+	  "errorOutputPaths": ["stderr"],
+	  "encoderConfig": {
+	    "messageKey": "message",
+	    "levelKey": "level",
+	    "levelEncoder": "lowercase"
+	  }
+	}`)
+
+	var cfg zap.Config
+	if err := json.Unmarshal(rawJSON, &cfg); err != nil {
+		panic(err)
+	}
+	logger, err := cfg.Build()
+	if err != nil {
+		panic(err)
+	}
+	defer logger.Sync()
+
+	return logger
+}
+
 func main() {
-	// Listen for incoming connections.
 
-	//target, user, password, nodeid := readConfig()
+	fmt.Print("Starting Medpot at ")
+	currentTime := time.Now()
+	fmt.Println(currentTime.Format("2006.01.02 15:04:05"))
 
-	//post(target, user, password, nodeid)
+	logger := initLogger()
 
 	l, err := net.Listen(CONN_TYPE, ":"+CONN_PORT)
 
@@ -94,13 +123,14 @@ func main() {
 			fmt.Println("Error accepting: ", err.Error())
 			os.Exit(1)
 		}
+
 		// Handle connections in a new goroutine.
-		go handleRequest(conn)
+		go handleRequest(conn, logger)
 	}
 }
 
 // Handles incoming requests.
-func handleRequest(conn net.Conn) {
+func handleRequest(conn net.Conn, logger *zap.Logger) {
 	// Make a buffer to hold incoming data.
 
 	buf := make([]byte, 1024*1024)
@@ -110,6 +140,16 @@ func handleRequest(conn net.Conn) {
 		fmt.Println("Error reading:", err.Error())
 	}
 
+	remote := fmt.Sprintf("%s", conn.RemoteAddr())
+	ip, port, _ := net.SplitHostPort(remote)
+
+	currentTime := time.Now()
+	fmt.Print(currentTime.Format("2006.01.02 15:04:05"))
+	myTime := currentTime.Format("2006.01.02 15:04:05")
+
+	fmt.Print(": Connecting from ip ", ip)
+	fmt.Println(" and port ", port)
+
 	// Send a response back to person contacting us.
 	conn.Write([]byte("Message received with " + strconv.Itoa(reqLen) + " length"))
 
@@ -118,6 +158,17 @@ func handleRequest(conn net.Conn) {
 	copy(bufTarget, buf)
 
 	spew.Dump(bufTarget)
+
+	encoded := base64.StdEncoding.EncodeToString([]byte(bufTarget))
+
+	logger.Info("Connection found",
+		// Structured context as strongly typed Field values.
+		zap.String("time", myTime),
+		zap.String("port", port),
+		zap.String("ip", ip),
+		zap.String("data", encoded),
+	)
+
 	// Close the connection when you're done with it.
 	conn.Close()
 }
