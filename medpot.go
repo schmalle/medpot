@@ -12,7 +12,6 @@ import (
 	"net"
 	"net/http"
 	"os"
-	"strconv"
 	"strings"
 	"time"
 )
@@ -150,8 +149,10 @@ func handleRequest(conn net.Conn, logger *zap.Logger) {
 	fmt.Print(": Connecting from ip ", ip)
 	fmt.Println(" and port ", port)
 
+	dat, err := ioutil.ReadFile("./template/dummyerror.xml")
+
 	// Send a response back to person contacting us.
-	conn.Write([]byte("Message received with " + strconv.Itoa(reqLen) + " length"))
+	conn.Write([]byte(dat))
 
 	// copy to a real buffer
 	bufTarget := make([]byte, reqLen)
