@@ -53,7 +53,7 @@ func post(target string, user string, password string, nodeid string) {
 	c := &http.Client{}
 	req := request.NewRequest(c)
 
-	dat, err := ioutil.ReadFile("./template/ews.xml")
+	dat := readFile("ews.xml")
 	body := strings.Replace(string(dat), "_USERNAME_", user, -1)
 	body = strings.Replace(body, "_TOKEN_", password, -1)
 	body = strings.Replace(body, "_NODEID_", nodeid, -1)
@@ -128,6 +128,28 @@ func main() {
 	}
 }
 
+/*
+	reads file from both possible locations (first repo location, second location from docker install
+ */
+func readFile(name string) []byte {
+
+	b1 := make([]byte, 4)
+
+	dat, err := ioutil.ReadFile("./template/" + name)
+	if (err == nil) {
+		return dat
+	}
+
+	dat, err = ioutil.ReadFile("/data/medpot/" + name)
+	if (err == nil) {
+		return dat
+
+	}
+
+	return b1
+
+}
+
 // Handles incoming requests.
 func handleRequest(conn net.Conn, logger *zap.Logger) {
 	// Make a buffer to hold incoming data.
@@ -149,10 +171,10 @@ func handleRequest(conn net.Conn, logger *zap.Logger) {
 	fmt.Print(": Connecting from ip ", ip)
 	fmt.Println(" and port ", port)
 
-	dat, err := ioutil.ReadFile("./template/dummyerror.xml")
+	dat := readFile("dummyerror.xml")
 
 	// Send a response back to person contacting us.
-	conn.Write([]byte(dat))
+	conn.Write(dat)
 
 	// copy to a real buffer
 	bufTarget := make([]byte, reqLen)

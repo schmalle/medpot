@@ -22,15 +22,15 @@ RUN    export GOPATH=/opt/go/ && \
     go get -d -v go.uber.org/zap && \
     cd /opt/go/src/medpot && \
     go build medpot && \
-    cp ./medpot /usr/bin/medpot && \
-    chmod 777 /var/log && \
-    cp ./template/medpot.log > /var/log/medpot.log && \
-    chmod 777 /var/log/medpot.log && \
+    cp ./medpot /usr/bin/medpot
+
+RUN cd /opt/go/src/medpot/template && \
+    cp ./medpot.log  /var/log/medpot.log && \
     mkdir /data && \
     mkdir /data/medpot && \
-    chmod 700 /data/medpot && \
-    cp ./template/ews.xml /data/medpot/ && \
-    cp ./template/dummyerror.xml /data/medpot/
+    cp ./ews.xml /data/medpot/ && \
+    cp ./dummyerror.xml /data/medpot/
+
 
 # Setup user, groups and configs
 RUN    addgroup -g 2000 medpot && \
