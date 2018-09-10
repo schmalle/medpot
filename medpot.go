@@ -17,7 +17,7 @@ import (
 )
 
 const (
-	CONN_HOST = "127.0.0.1"
+	CONN_HOST = "0.0.0.0"
 	CONN_PORT = "2575"
 	CONN_TYPE = "tcp"
 )
@@ -75,7 +75,7 @@ func initLogger() *zap.Logger {
 	rawJSON := []byte(`{
 	  "level": "debug",
 	  "encoding": "json",
-	  "outputPaths": ["stdout", "/var/log/medpot.log"],
+	  "outputPaths": ["stdout", "/var/log/medpot/medpot.log"],
 	  "errorOutputPaths": ["stderr"],
 	  "encoderConfig": {
 	    "messageKey": "message",
@@ -100,8 +100,8 @@ func initLogger() *zap.Logger {
 func main() {
 
 	fmt.Print("Starting Medpot at ")
-	currentTime := time.Now()
-	fmt.Println(currentTime.Format("2006.01.02 15:04:05"))
+        currentTime := time.Now().UTC().Format(time.RFC3339)                                                    
+        fmt.Println(currentTime)                        
 
 	logger := initLogger()
 
@@ -164,9 +164,9 @@ func handleRequest(conn net.Conn, logger *zap.Logger) {
 	remote := fmt.Sprintf("%s", conn.RemoteAddr())
 	ip, port, _ := net.SplitHostPort(remote)
 
-	currentTime := time.Now()
-	fmt.Print(currentTime.Format("2006.01.02 15:04:05"))
-	myTime := currentTime.Format("2006.01.02 15:04:05")
+	currentTime := time.Now().UTC().Format(time.RFC3339)
+	fmt.Print(currentTime)
+	myTime := currentTime
 
 	fmt.Print(": Connecting from ip ", ip)
 	fmt.Println(" and port ", port)
@@ -186,9 +186,9 @@ func handleRequest(conn net.Conn, logger *zap.Logger) {
 
 	logger.Info("Connection found",
 		// Structured context as strongly typed Field values.
-		zap.String("time", myTime),
-		zap.String("port", port),
-		zap.String("ip", ip),
+		zap.String("timestamp", myTime),
+		zap.String("src_port", port),
+		zap.String("src_ip", ip),
 		zap.String("data", encoded),
 	)
 
