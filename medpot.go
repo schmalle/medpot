@@ -18,6 +18,7 @@ import (
 
 const (
 	CONN_HOST = "127.0.0.1"
+	CONN_HOST = "0.0.0.0"
 	CONN_PORT = "2575"
 	CONN_TYPE = "tcp"
 )
@@ -75,7 +76,7 @@ func initLogger() *zap.Logger {
 	rawJSON := []byte(`{
 	  "level": "debug",
 	  "encoding": "json",
-	  "outputPaths": ["stdout", "/var/log/medpot.log"],
+	  "outputPaths": ["stdout", "/var/log/medpot/medpot.log"],
 	  "errorOutputPaths": ["stderr"],
 	  "encoderConfig": {
 	    "messageKey": "message",
@@ -100,8 +101,8 @@ func initLogger() *zap.Logger {
 func main() {
 
 	fmt.Print("Starting Medpot at ")
-	currentTime := time.Now()
-	fmt.Println(currentTime.Format("2006.01.02 15:04:05"))
+	currentTime := time.Now().UTC().Format(time.RFC3339)
+	fmt.Println(currentTime)
 
 	logger := initLogger()
 
@@ -130,18 +131,18 @@ func main() {
 
 /*
 	reads file from both possible locations (first repo location, second location from docker install
- */
+*/
 func readFile(name string) []byte {
 
 	b1 := make([]byte, 4)
 
 	dat, err := ioutil.ReadFile("./template/" + name)
-	if (err == nil) {
+	if err == nil {
 		return dat
 	}
 
 	dat, err = ioutil.ReadFile("/data/medpot/" + name)
-	if (err == nil) {
+	if err == nil {
 		return dat
 
 	}
@@ -157,7 +158,6 @@ func handleRequest(conn net.Conn, logger *zap.Logger) {
 	buf := make([]byte, 1024*1024)
 	counter := 0
 
-
 	for {
 
 		timeoutDuration := 3 * time.Second
@@ -168,15 +168,14 @@ func handleRequest(conn net.Conn, logger *zap.Logger) {
 		if err != nil {
 			fmt.Println("Error reading:", err.Error())
 			conn.Close()
-			break;
+			break
 		} else {
 
 			remote := fmt.Sprintf("%s", conn.RemoteAddr())
 			ip, port, _ := net.SplitHostPort(remote)
-
-			currentTime := time.Now()
-			fmt.Print(currentTime.Format("2006.01.02 15:04:05"))
-			myTime := currentTime.Format("2006.01.02 15:04:05")
+			currentTime := time.Now().UTC().Format(time.RFC3339)
+			fmt.Print(currentTime)
+			myTime := currentTime
 
 			fmt.Print(": Connecting from ip ", ip)
 			fmt.Println(" and port ", port)
@@ -196,22 +195,20 @@ func handleRequest(conn net.Conn, logger *zap.Logger) {
 
 			logger.Info("Connection found",
 				// Structured context as strongly typed Field values.
-				zap.String("time", myTime),
-				zap.String("port", port),
-				zap.String("ip", ip),
+				zap.String("timestamp", myTime),
+				zap.String("src_port", port),
+				zap.String("src_ip", ip),
 				zap.String("data", encoded),
 			)
 
 		}
 
-
-		counter = counter +1;
+		counter = counter + 1
 		fmt.Println("Increase counter ...")
-		if (counter == 3) {
+		if counter == 3 {
 			fmt.Println(("Maximum loop counter reached...."))
 			conn.Close()
 		}
 	}
-
 
 }
