@@ -17,7 +17,6 @@ import (
 )
 
 const (
-	CONN_HOST = "127.0.0.1"
 	CONN_HOST = "0.0.0.0"
 	CONN_PORT = "2575"
 	CONN_TYPE = "tcp"
