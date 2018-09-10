@@ -1,8 +1,8 @@
 # medpot
 HL7 / FHIR honeypot
 
-Listening on port 2575
-Uses GOs dep
+- Listening on port 2575
+- Uses GOs dep
 
 ## Install ##
 

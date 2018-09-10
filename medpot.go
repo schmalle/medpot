@@ -155,43 +155,63 @@ func handleRequest(conn net.Conn, logger *zap.Logger) {
 	// Make a buffer to hold incoming data.
 
 	buf := make([]byte, 1024*1024)
-	// Read the incoming connection into the buffer.
-	reqLen, err := conn.Read(buf)
-	if err != nil {
-		fmt.Println("Error reading:", err.Error())
+	counter := 0
+
+
+	for {
+
+		timeoutDuration := 3 * time.Second
+		conn.SetReadDeadline(time.Now().Add(timeoutDuration))
+
+		// Read the incoming connection into the buffer.
+		reqLen, err := conn.Read(buf)
+		if err != nil {
+			fmt.Println("Error reading:", err.Error())
+			conn.Close()
+			break;
+		} else {
+
+			remote := fmt.Sprintf("%s", conn.RemoteAddr())
+			ip, port, _ := net.SplitHostPort(remote)
+
+			currentTime := time.Now()
+			fmt.Print(currentTime.Format("2006.01.02 15:04:05"))
+			myTime := currentTime.Format("2006.01.02 15:04:05")
+
+			fmt.Print(": Connecting from ip ", ip)
+			fmt.Println(" and port ", port)
+
+			dat := readFile("dummyerror.xml")
+
+			// Send a response back to person contacting us.
+			conn.Write(dat)
+
+			// copy to a real buffer
+			bufTarget := make([]byte, reqLen)
+			copy(bufTarget, buf)
+
+			spew.Dump(bufTarget)
+
+			encoded := base64.StdEncoding.EncodeToString([]byte(bufTarget))
+
+			logger.Info("Connection found",
+				// Structured context as strongly typed Field values.
+				zap.String("time", myTime),
+				zap.String("port", port),
+				zap.String("ip", ip),
+				zap.String("data", encoded),
+			)
+
+		}
+
+
+		counter = counter +1;
+		fmt.Println("Increase counter ...")
+		if (counter == 3) {
+			fmt.Println(("Maximum loop counter reached...."))
+			conn.Close()
+		}
 	}
 
-	remote := fmt.Sprintf("%s", conn.RemoteAddr())
-	ip, port, _ := net.SplitHostPort(remote)
 
-	currentTime := time.Now()
-	fmt.Print(currentTime.Format("2006.01.02 15:04:05"))
-	myTime := currentTime.Format("2006.01.02 15:04:05")
-
-	fmt.Print(": Connecting from ip ", ip)
-	fmt.Println(" and port ", port)
-
-	dat := readFile("dummyerror.xml")
-
-	// Send a response back to person contacting us.
-	conn.Write(dat)
-
-	// copy to a real buffer
-	bufTarget := make([]byte, reqLen)
-	copy(bufTarget, buf)
-
-	spew.Dump(bufTarget)
-
-	encoded := base64.StdEncoding.EncodeToString([]byte(bufTarget))
-
-	logger.Info("Connection found",
-		// Structured context as strongly typed Field values.
-		zap.String("time", myTime),
-		zap.String("port", port),
-		zap.String("ip", ip),
-		zap.String("data", encoded),
-	)
-
-	// Close the connection when you're done with it.
-	conn.Close()
 }
