@@ -150,6 +150,30 @@ func readFile(name string) []byte {
 
 }
 
+func handleClientRequest(conn net.Conn, buf []byte, reqLen int) {
+
+	dat := readFile("dummyerror.xml")
+
+	// copy to a real buffer
+	bufTarget := make([]byte, reqLen)
+	copy(bufTarget, buf)
+
+	s := string(buf)
+	if strings.Contains(s, "MSH") {
+
+		if strings.Index(s, "MSH|") == 0 {
+
+			dat = readFile("dummyok.xml")
+
+		}
+
+	}
+
+	// Send a response back to person contacting us.
+	conn.Write(dat)
+
+}
+
 // Handles incoming requests.
 func handleRequest(conn net.Conn, logger *zap.Logger) {
 	// Make a buffer to hold incoming data.
@@ -165,7 +189,10 @@ func handleRequest(conn net.Conn, logger *zap.Logger) {
 		// Read the incoming connection into the buffer.
 		reqLen, err := conn.Read(buf)
 		if err != nil {
-			fmt.Println("Error reading:", err.Error())
+
+			if err.Error() != "EOF" {
+				fmt.Println("Error reading:", err.Error())
+			}
 			conn.Close()
 			break
 		} else {
@@ -179,10 +206,7 @@ func handleRequest(conn net.Conn, logger *zap.Logger) {
 			fmt.Print(": Connecting from ip ", ip)
 			fmt.Println(" and port ", port)
 
-			dat := readFile("dummyerror.xml")
-
-			// Send a response back to person contacting us.
-			conn.Write(dat)
+			handleClientRequest(conn, buf, reqLen)
 
 			// copy to a real buffer
 			bufTarget := make([]byte, reqLen)
