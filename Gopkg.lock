@@ -18,12 +18,12 @@
   version = "v1.1.1"
 
 [[projects]]
-  digest = "1:5abd6a22805b1919f6a6bca0ae58b13cef1f3412812f38569978f43ef02743d4"
+  digest = "1:15e27372d379b45b18ac917b9dafc45c45485239490ece18cca97a12f9591146"
   name = "github.com/go-ini/ini"
   packages = ["."]
   pruneopts = "UT"
-  revision = "5cf292cae48347c2490ac1a58fe36735fb78df7e"
-  version = "v1.38.2"
+  revision = "9c8236e659b76e87bf02044d06fde8683008ff3e"
+  version = "v1.39.0"
 
 [[projects]]
   digest = "1:36c822037752d78e28e2776bf39c41893f01cf651d2039c4572f19c0a8794083"
@@ -66,7 +66,7 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:34acbc507df606c5b50c39650af767c3e57f1abdc9469f3d6a53b6a36e7ca606"
+  digest = "1:cf0fd04be21e8e1cbd95a5887b972675e821d1668ac5d11cb975768e1f16613c"
   name = "golang.org/x/net"
   packages = [
     "idna",
@@ -75,7 +75,7 @@
     "publicsuffix",
   ]
   pruneopts = "UT"
-  revision = "8a410e7b638dca158bf9e766925842f6651ff828"
+  revision = "03003ca0c849e57b6ea29a4bab8d3cb6e4d568fe"
 
 [[projects]]
   digest = "1:a2ab62866c75542dd18d2b069fec854577a20211d7c0ea6ae746072a1dccdd18"
