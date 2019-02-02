@@ -60,7 +60,7 @@ func post(target string, user string, password string, nodeid string) {
 
 	// not set Content-Type
 	req.Body = strings.NewReader(string(body))
-	resp, err := req.Post("http://127.0.0.1:9922/ews-0.1/alert/postSimpleMessage")
+	resp, err := req.Post(target)
 
 	if err != nil {
 		fmt.Println("Error http post:", err.Error())
