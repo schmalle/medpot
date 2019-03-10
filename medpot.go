@@ -41,14 +41,14 @@ func readConfig() (string, string, string, string) {
 
 	target := cfg.Section("EWS").Key("rhost_first").String()
 	user := cfg.Section("EWS").Key("username").String()
-	password := cfg.Section("EWS").Key("password").String()
+	password := cfg.Section("EWS").Key("token").String()
 	nodeid := cfg.Section("GLASTOPFV3").Key("nodeid").String()
 	nodeid = strings.Replace(nodeid, "glastopfv3-", "medpot-", -1)
 	return target, user, password, nodeid
 
 }
 
-func post(target string, user string, password string, nodeid string) {
+func post(target string, user string, password string, nodeid string, myTime string, port string, ip string, encoded string) {
 
 	c := &http.Client{}
 	req := request.NewRequest(c)
@@ -57,6 +57,10 @@ func post(target string, user string, password string, nodeid string) {
 	body := strings.Replace(string(dat), "_USERNAME_", user, -1)
 	body = strings.Replace(body, "_TOKEN_", password, -1)
 	body = strings.Replace(body, "_NODEID_", nodeid, -1)
+	body = strings.Replace(body, "_IP_", ip, -1)
+	body = strings.Replace(body, "_PORT_", port, -1)
+	body = strings.Replace(body, "_TIME_", myTime, -1)
+	body = strings.Replace(body, "_DATA_", encoded, -1)
 
 	// not set Content-Type
 	req.Body = strings.NewReader(string(body))
@@ -103,6 +107,8 @@ func main() {
 	currentTime := time.Now().UTC().Format(time.RFC3339)
 	fmt.Println(currentTime)
 
+	target, user, password, nodeid := readConfig()
+
 	logger := initLogger()
 
 	l, err := net.Listen(CONN_TYPE, ":"+CONN_PORT)
@@ -124,7 +130,7 @@ func main() {
 		}
 
 		// Handle connections in a new goroutine.
-		go handleRequest(conn, logger)
+		go handleRequest(conn, logger, target, user, password, nodeid)
 	}
 }
 
@@ -175,7 +181,7 @@ func handleClientRequest(conn net.Conn, buf []byte, reqLen int) {
 }
 
 // Handles incoming requests.
-func handleRequest(conn net.Conn, logger *zap.Logger) {
+func handleRequest(conn net.Conn, logger *zap.Logger, target string, user string, password string, nodeid string) {
 	// Make a buffer to hold incoming data.
 
 	buf := make([]byte, 1024*1024)
@@ -223,6 +229,9 @@ func handleRequest(conn net.Conn, logger *zap.Logger) {
 				zap.String("src_ip", ip),
 				zap.String("data", encoded),
 			)
+
+			// if configured, send bacxk data to PEBA / DTAG T_pot homebase
+			post(target, user, password, nodeid, myTime, port, ip, encoded)
 
 		}
 
