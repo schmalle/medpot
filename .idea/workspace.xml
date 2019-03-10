@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="40f3ab39-4d98-4d36-a454-19d9bf7eed68" name="Default" comment="bugfix for ews sending">
-      <change afterPath="$PROJECT_DIR$/template/dummyok.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/etc/ews.cfg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gopkg.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gopkg.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/medpot.go" beforeDir="false" afterPath="$PROJECT_DIR$/medpot.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -12,115 +13,13 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="-2100319401">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="10" />
-          <entry key="project.open.time.10" value="1" />
-          <entry key="project.open.time.13" value="1" />
-          <entry key="project.open.time.17" value="1" />
-          <entry key="project.open.time.4" value="1" />
-          <entry key="project.open.time.5" value="2" />
-          <entry key="project.open.time.8" value="4" />
-          <entry key="project.opened" value="10" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="go" value="846" />
-          <entry key="txt" value="34" />
-          <entry key="xml" value="18" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="Go" value="846" />
-          <entry key="PLAIN_TEXT" value="34" />
-          <entry key="XML" value="18" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.js.language.service.starts" />
-      <usages-collector id="statistics.go.postfix.template.usages.trigger" />
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="xml" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="XML" value="1" />
-        </counts>
-      </usages-collector>
-    </session>
-    <session id="-1780211681">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="11" />
-          <entry key="project.open.time.12" value="2" />
-          <entry key="project.open.time.5" value="2" />
-          <entry key="project.open.time.6" value="2" />
-          <entry key="project.open.time.7" value="5" />
-          <entry key="project.open.time.8" value="2" />
-          <entry key="project.opened" value="13" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="Dockerfile" value="2" />
-          <entry key="gitignore" value="2" />
-          <entry key="go" value="3" />
-          <entry key="lock" value="2" />
-          <entry key="log" value="1" />
-          <entry key="sh" value="6" />
-          <entry key="toml" value="3" />
-          <entry key="txt" value="3" />
-          <entry key="xml" value="2" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="Bash" value="14" />
-          <entry key="Dockerfile" value="778" />
-          <entry key="Go" value="1352" />
-          <entry key="Markdown" value="217" />
-          <entry key="PLAIN_TEXT" value="117" />
-          <entry key="XML" value="10" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.go.postfix.template.usages.trigger" />
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="Bash" value="5" />
-          <entry key="Dockerfile" value="2" />
-          <entry key="Go" value="3" />
-          <entry key="PLAIN_TEXT" value="10" />
-          <entry key="TOML file" value="2" />
-          <entry key="XML" value="2" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.js.language.service.starts" />
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="Dockerfile" value="778" />
-          <entry key="gitignore" value="23" />
-          <entry key="go" value="1352" />
-          <entry key="md" value="217" />
-          <entry key="sh" value="15" />
-          <entry key="txt" value="93" />
-          <entry key="xml" value="10" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.vcs.git.usages" />
-    </session>
-  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/medpot.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="335">
-              <caret line="207" selection-start-line="207" selection-end-line="207" />
+            <state relative-caret-position="464">
+              <caret line="43" column="23" selection-start-line="43" selection-start-column="23" selection-end-line="43" selection-end-column="23" />
               <folding>
                 <element signature="e#14#235#0" expanded="true" />
               </folding>
@@ -129,10 +28,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Dockerfile">
+        <entry file="file://$PROJECT_DIR$/template/ews.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="705">
-              <caret line="47" selection-start-line="47" selection-end-line="47" />
+            <state relative-caret-position="255">
+              <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/send.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="30">
+              <caret line="2" selection-start-line="2" selection-end-line="2" />
             </state>
           </provider>
         </entry>
@@ -160,18 +68,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
               <caret line="2" column="40" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="345">
-                <caret line="23" selection-start-line="23" selection-end-line="23" />
-              </first_editor>
-              <second_editor />
             </state>
           </provider>
         </entry>
@@ -226,7 +122,7 @@
       <find>1.11</find>
     </findStrings>
   </component>
-  <component name="GOROOT" path="/usr/local/go" />
+  <component name="GOROOT" path="/usr/local/Cellar/go/1.12/libexec" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -249,20 +145,15 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/Dockerfile" />
         <option value="$PROJECT_DIR$/template/dummyok.xml" />
+        <option value="$PROJECT_DIR$/dist/etc/ews.cfg" />
         <option value="$PROJECT_DIR$/medpot.go" />
       </list>
     </option>
   </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsGulpfileManager">
-    <detection-done>true</detection-done>
-    <sorting>DEFINITION_ORDER</sorting>
-  </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1680" />
-    <option name="height" value="1027" />
+    <option name="height" value="963" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -280,43 +171,23 @@
             <path>
               <item name="medpot" type="b2602c69:ProjectViewProjectNode" />
               <item name="medpot" type="462c0819:PsiDirectoryNode" />
+              <item name="dist" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="medpot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="medpot" type="462c0819:PsiDirectoryNode" />
+              <item name="dist" type="462c0819:PsiDirectoryNode" />
+              <item name="etc" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="medpot" type="b2602c69:ProjectViewProjectNode" />
+              <item name="medpot" type="462c0819:PsiDirectoryNode" />
               <item name="protocol" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="medpot" type="b2602c69:ProjectViewProjectNode" />
               <item name="medpot" type="462c0819:PsiDirectoryNode" />
               <item name="template" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="medpot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="medpot" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="medpot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="medpot" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="github.com" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="medpot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="medpot" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="github.com" type="462c0819:PsiDirectoryNode" />
-              <item name="bitly" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="medpot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="medpot" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="golang.org" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="medpot" type="b2602c69:ProjectViewProjectNode" />
-              <item name="medpot" type="462c0819:PsiDirectoryNode" />
-              <item name="vendor" type="462c0819:PsiDirectoryNode" />
-              <item name="golang.org" type="462c0819:PsiDirectoryNode" />
-              <item name="x" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -328,6 +199,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultGoTemplateProperty" value="Go File" />
     <property name="GO_FMT" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="configurable.Global.GOPATH.is.expanded" value="true" />
     <property name="configurable.Module.GOPATH.is.expanded" value="false" />
     <property name="configurable.Project.GOPATH.is.expanded" value="true" />
@@ -377,9 +249,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1680" height="1027" extended-state="0" />
+    <frame x="0" y="23" width="1680" height="963" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.26373628" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2954823" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -391,7 +264,7 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32941177" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.32299465" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.22273248" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -402,9 +275,6 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
-  </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="small update" />
@@ -417,24 +287,9 @@
     <option name="LAST_COMMIT_MESSAGE" value="fixed tcp handling" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/template/ews.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="30" selection-start-line="7" selection-start-column="22" selection-end-line="7" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../go.uber.org/zap/config.go" />
     <entry file="file://$PROJECT_DIR$/template/medpot.log">
-      <provider selected="true" editor-type-id="LogFileEditorProvider" />
       <provider editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/send.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" selection-start-line="2" selection-end-line="2" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/template/dummyerror.xml">
       <provider selected="true" editor-type-id="text-editor">
@@ -457,16 +312,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/medpot.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="335">
-          <caret line="207" selection-start-line="207" selection-end-line="207" />
-          <folding>
-            <element signature="e#14#235#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Dockerfile">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="705">
@@ -474,24 +319,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/packet.txt">
+    <entry file="file://$PROJECT_DIR$/dist/etc/ews.cfg">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="3" selection-start-column="3" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/start.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="33" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/startshell.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="40" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
+        <state relative-caret-position="1905">
+          <caret line="127" column="45" selection-start-line="127" selection-start-column="45" selection-end-line="127" selection-end-column="45" />
         </state>
       </provider>
     </entry>
@@ -513,13 +344,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/builddocker.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Gopkg.lock">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -531,6 +355,58 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="435">
           <caret line="29" column="16" selection-start-line="29" selection-start-column="16" selection-end-line="29" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/startshell.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="40" selection-start-line="2" selection-start-column="40" selection-end-line="2" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packet.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="3" selection-start-column="3" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/builddocker.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/template/ews.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/start.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="33" selection-start-line="2" selection-start-column="33" selection-end-line="2" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/send.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/medpot.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="464">
+          <caret line="43" column="23" selection-start-line="43" selection-start-column="23" selection-end-line="43" selection-end-column="23" />
+          <folding>
+            <element signature="e#14#235#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
