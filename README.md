@@ -14,7 +14,7 @@ Done
 
 ##Logfile structure
 
-Logfile is located at /var/log/medpot.log
+Logfile is located at /var/log/medpot.log 
 
 ###Example:
 
