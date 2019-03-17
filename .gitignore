@@ -1,3 +1,4 @@
 vendor
 _vendor*
 medpot
+node_modules
