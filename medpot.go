@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/tls"
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
@@ -50,7 +51,11 @@ func readConfig() (string, string, string, string) {
 
 func post(target string, user string, password string, nodeid string, myTime string, port string, ip string, encoded string) {
 
-	c := &http.Client{}
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+	}
+
+	c := &http.Client{Transport: tr}
 	req := request.NewRequest(c)
 
 	dat := readFile("ews.xml")
