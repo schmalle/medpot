@@ -33,22 +33,21 @@ type conf_t struct {
 	conn         net.Conn    // The active connection
 	log_location string      // Where on the disk is the log file located
 	logger       *zap.Logger // Object to our logger
+	ews_location string // Location of the ews.cfg
 }
 
 const (
 	CONN_HOST   = "0.0.0.0"
-	CONN_PORT   = "2575" // Default port
 	CONN_TYPE   = "tcp"
-	DEFAULT_LOG = "/var/log/medpot/"
-	LOG_NAME    = "medpot"
+	VERSION = "1.0" // Current version
 )
 
 /*
 	read config from EWS poster for DTAGs Early warning system and T-Pot
 */
-func readConfig() (string, string, string, string) {
+func readConfig(cconf_t *conf_t) (string, string, string, string) {
 
-	cfg, err := ini.Load("/etc/ews.cfg")
+	cfg, err := ini.Load(fmt.Sprintf("%s", cconf_t.ews_location))
 	if err != nil {
 		notify.Error(err.Error(), "medpot.readConfig()")
 	}
@@ -71,7 +70,7 @@ func post(cconf_t *conf_t, time string) {
 	c := &http.Client{Transport: tr}
 	req := request.NewRequest(c)
 
-	dat := readFile("ews.xml")
+	dat := readFile("template/ews.xml")
 	body := strings.Replace(string(dat), "_USERNAME_", cconf_t.username, -1)
 	body = strings.Replace(body, "_TOKEN_", cconf_t.password, -1)
 	body = strings.Replace(body, "_NODEID_", cconf_t.nodeID, -1)
@@ -92,19 +91,19 @@ func post(cconf_t *conf_t, time string) {
 
 }
 
-func initLogger() *zap.Logger {
+func initLogger(cconf_t *conf_t) *zap.Logger {
 
-	rawJSON := []byte(`{
+	rawJSON := []byte(fmt.Sprintf(`{
 	  "level": "debug",
 	  "encoding": "json",
-	  "outputPaths": ["stdout", "/var/log/medpot/medpot.log"],
+	  "outputPaths": ["stdout", %s],
 	  "errorOutputPaths": ["stderr"],
 	  "encoderConfig": {
 	    "messageKey": "message",
 	    "levelKey": "level",
 	    "levelEncoder": "lowercase"
 	  }
-	}`)
+	}`, cconf_t.log_location))
 
 	var cfg zap.Config
 	if err := json.Unmarshal(rawJSON, &cfg); err != nil {
@@ -125,14 +124,13 @@ func main() {
 	arg.Argument_add("--help", "-h", false, "Displays all defined arguments", []string{"NULL"})
 	arg.Argument_add("--set_logo", "-sl", true, "Allows you to pick a logo that is shown on boot, options are = 1, 2", []string{"1", "2"})
 	arg.Argument_add("--set_port", "-sp", true, "Allows for a different port to be used, default = 2575", []string{"NULL"})
-	arg.Argument_add("--set_log_location", "-sll", true, "Changes where logsw will be placed, default = /var/log/medpot/ ", []string{"NULL"})
+	arg.Argument_add("--set_log_location", "-sll", true, "Changes the directory where the logs will be placed, default = '/var/log/medpot/'", []string{"NULL"})
+	arg.Argument_add("--set_ews_location", "-sel", true, "Changes the directory where the 'ews.cfg' is located, default = '/etc/'", []string{"NULL"})
 
 	arg.Argument_parse() // Checks which arguments that can have been passed onto the program
 
 	cconf_t := new(conf_t)
-
-	current_logo := LOGO_2
-	current_port := CONN_PORT
+	var current_logo string
 
 	if arg.Argument_check("-h") {
 		arg.Argument_help()
@@ -146,34 +144,44 @@ func main() {
 		case "2":
 			current_logo = LOGO_2
 		}
+	}else{
+		current_logo = LOGO_2
 	}
 
 	if arg.Argument_check("-sp") {
-		current_port = arg.Argument_get("-sp")
-		_, err := strconv.Atoi(current_port) // Checks if it's a valid port
+		cconf_t.port = arg.Argument_get("-sp")
+		_, err := strconv.Atoi(cconf_t.port) // Checks if it's a valid port
 		if err != nil {
 			notify.Error(err.Error(), "medpot.main()")
 		}
+	}else{
+		cconf_t.port = "2575"
 	}
 
 	if arg.Argument_check("-sll") {
 		cconf_t.log_location = arg.Argument_get("-sll")
 	} else {
-		cconf_t.log_location = DEFAULT_LOG
+		cconf_t.log_location = "/var/log/medpot/"
+	}
+
+	if arg.Argument_check("-sel") {
+		cconf_t.ews_location = arg.Argument_get("-sel")
+	} else {
+		cconf_t.ews_location = "/etc/"
 	}
 
 	fmt.Println(current_logo) // Print the logo that will be used
 
 	notify.Inform(fmt.Sprintf("Starting Medpot at %s", time.Now().Format(time.RFC822)))
+	notify.Inform(fmt.Sprintf("V.'%s' //s9rA16Bf4", VERSION))
 	notify.Inform(fmt.Sprintf("Log files will be located at '%s'", cconf_t.log_location))
+	notify.Inform(fmt.Sprintf("Will utilize port %s", cconf_t.port))
 
-	notify.Inform(fmt.Sprintf("Will utilize port %s", current_port))
+	cconf_t.target, cconf_t.username, cconf_t.password, cconf_t.nodeID = readConfig(cconf_t)
 
-	cconf_t.target, cconf_t.username, cconf_t.password, cconf_t.nodeID = readConfig()
+	cconf_t.logger = initLogger(cconf_t)
 
-	cconf_t.logger = initLogger()
-
-	l, err := net.Listen(CONN_TYPE, ":"+current_port)
+	l, err := net.Listen(CONN_TYPE, ":"+cconf_t.port)
 
 	if err != nil {
 		notify.Error(err.Error(), "medpot.main()")
@@ -181,7 +189,7 @@ func main() {
 	// Close the listener when the application closes.
 	defer l.Close()
 
-	notify.Inform(fmt.Sprintf("Listening on host %s on port %s", CONN_HOST, current_port))
+	notify.Inform(fmt.Sprintf("Listening on host %s on port %s", CONN_HOST, cconf_t.port))
 
 	for {
 		// Listen for an incoming connection.
@@ -206,7 +214,7 @@ func readFile(name string) []byte {
 	if err == nil {
 		return dat
 	} else {
-		notify.Warning(fmt.Sprintf("Failed to read file ./template/	%s", name))
+		notify.Warning(fmt.Sprintf("Failed to read file '%s'", name))
 	}
 
 	dat, err = ioutil.ReadFile("/data/medpot/" + name)
@@ -223,14 +231,14 @@ func readFile(name string) []byte {
 
 func handleClientRequest(cconf_t *conf_t, buf []byte, reqLen int) {
 	// These templates are utilized when a user connects
-	dat := readFile("dummyerror.xml")
+	dat := readFile("./template/dummyerror.xml")
 
 	// copy to a real buffer
 	bufTarget := make([]byte, reqLen)
 	copy(bufTarget, buf)
 
 	if strings.Contains(string(buf), "MSH") && strings.Index(string(buf), "MSH|") == 0 {
-		dat = readFile("dummyok.xml")
+		dat = readFile("./template/dummyok.xml")
 	}
 
 	// Send a response back to person contacting us.
