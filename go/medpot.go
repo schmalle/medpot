@@ -70,7 +70,7 @@ func post(cconf_t *conf_t, time string) {
 	c := &http.Client{Transport: tr}
 	req := request.NewRequest(c)
 
-	dat := readFile("template/ews.xml")
+	dat := readFile("./template/ews.xml")
 	body := strings.Replace(string(dat), "_USERNAME_", cconf_t.username, -1)
 	body = strings.Replace(body, "_TOKEN_", cconf_t.password, -1)
 	body = strings.Replace(body, "_NODEID_", cconf_t.nodeID, -1)
@@ -96,7 +96,7 @@ func initLogger(cconf_t *conf_t) *zap.Logger {
 	rawJSON := []byte(fmt.Sprintf(`{
 	  "level": "debug",
 	  "encoding": "json",
-	  "outputPaths": ["stdout", %s],
+	  "outputPaths": ["stdout", "%s"],
 	  "errorOutputPaths": ["stderr"],
 	  "encoderConfig": {
 	    "messageKey": "message",
