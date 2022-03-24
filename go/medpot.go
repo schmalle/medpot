@@ -47,7 +47,7 @@ const (
 */
 func readConfig(cconf_t *conf_t) (string, string, string, string) {
 
-	cfg, err := ini.Load(fmt.Sprintf("%s", cconf_t.ews_location))
+	cfg, err := ini.Load(fmt.Sprintf("%s"+"ews.cfg", cconf_t.ews_location))
 	if err != nil {
 		notify.Error(err.Error(), "medpot.readConfig()")
 	}
