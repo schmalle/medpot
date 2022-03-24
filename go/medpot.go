@@ -172,10 +172,11 @@ func main() {
 	}
 
 	fmt.Println(current_logo) // Print the logo that will be used
-
+	notify.Inform(fmt.Sprintf("V.%s", VERSION))
 	notify.Inform(fmt.Sprintf("Starting Medpot at %s", time.Now().Format(time.RFC822)))
-	notify.Inform(fmt.Sprintf("V.'%s'", VERSION))
-	notify.Inform("Written by @schmalle, forked and updated by @s9rA16Bf4\n")
+	notify.Inform("Written by @schmalle, forked and updated by @s9rA16Bf4")
+	notify.Inform("If you find any bugs, just report them on the github 'github.com/s9rA16Bf4/medpot'")
+	notify.Inform("--------------------------------------------------------")
 	notify.Inform(fmt.Sprintf("Log files will be located at '%s'", cconf_t.log_location))
 	notify.Inform(fmt.Sprintf("Will utilize port %s", cconf_t.port))
 
