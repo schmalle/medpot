@@ -163,6 +163,7 @@ func main() {
 	} else {
 		cconf_t.log_location = "/var/log/medpot/"
 	}
+	cconf_t.log_location += "medpot.log"
 
 	if arg.Argument_check("-sel") {
 		cconf_t.ews_location = arg.Argument_get("-sel")
