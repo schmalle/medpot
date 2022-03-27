@@ -15,11 +15,16 @@ RUN cd /tmp && \
     go get -v github.com/mozillazg/request && \
     go get -v go.uber.org/zap && \
     cd ../ && \
-    bash scripts/compile_medpot.sh && \
-    cp medpot /usr/bin
+    go build -o medpot go/*.go && \
+    cp medpot /usr/bin/ && \
+    mkdir /etc/medpot/ && \
+    cp template/* /etc/medpot/ && \
+    mkdir /var/log/medpot && \
+    touch /var/log/medpot/medpot.log
 
 # Setup user, groups and configs
-RUN "/bin/env bash /tmp/medpot/docker/step_4.bash"
+RUN addgroup -g 2000 medpot && \
+    adduser -S -s /bin/bash -u 2000 -D -g 2000 medpot
 
 # Clean up
 RUN apk del --purge build-base git go g++ && \
