@@ -5,9 +5,7 @@ FROM alpine
 # Setup apk
 RUN apk -U --no-cache add build-base git go g++
 
-RUN chmod +x ./step_2.bash && \
-    chmod +x ./step_3.bash && \
-    chmod +x ./step_4.bash
+RUN pwd
 
 # Setup go, medpot
 RUN '/bin/env bash ./docker/step_2.bash'
