@@ -40,6 +40,6 @@ RUN    apk del --purge build-base \
            /root/dist
 
 # Start medpot
-WORKDIR /usr/bin/medpot
+WORKDIR /usr/bin/
 USER medpot:medpot
 CMD exec medpot
