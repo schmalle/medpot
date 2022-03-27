@@ -5,7 +5,8 @@ FROM alpine
 # Setup apk
 RUN apk -U --no-cache add build-base git go g++
 
-RUN cd /tmp && git clone https://github.com/s9rA16Bf4/medpot.git && cd /tmp/medpot
+RUN cd /tmp && git clone https://github.com/s9rA16Bf4/medpot.git && cd /tmp/medpot / &&
+    git checkout unstable
 
 # Setup go, medpot
 RUN "/bin/env bash /tmp/medpot/docker/step_2.bash"
