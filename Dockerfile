@@ -16,6 +16,7 @@ RUN cd /tmp && \
     go get -d -v github.com/go-ini/ini && \
     go get -d -v github.com/mozillazg/request && \
     go get -d -v go.uber.org/zap && \
+    cd /tmp/medpot && \
     make && \
     make install
 
