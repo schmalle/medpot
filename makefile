@@ -13,5 +13,9 @@ install:
 	touch /var/log/medpot/medpot.log
 	cp $(BIN) /usr/bin/
 
+uninstall:
+	rm /usr/bin/$(BIN)
+	rm -r /etc/medpot
+
 clean:
 	rm $(BIN)
