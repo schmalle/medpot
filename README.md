@@ -9,6 +9,7 @@ Requires go 1.17 or newer
     a) `bash scripts/run_medpot.sh` or `go run go/*.go` - To run the files<br>
     b) `bash scripts/compile_medpot.sh` or  `go build -o medpot go/*.go` - To compile the files into a binary<br>
     c) `make` and `make install` to create a copy on disk and also create all necessary files<br>
+    d) `bash scripts/compile_docker.sh` to create a docker container
 3. You're done now! My suggestion is to check the arguments that you can send in to the program
 
 By default the honeypot will try to bind and listen on port `2575`
