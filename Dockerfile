@@ -17,8 +17,12 @@ RUN cd /tmp && \
     go get -d -v github.com/mozillazg/request && \
     go get -d -v go.uber.org/zap && \
     cd /tmp/medpot && \
-    make && \
-    make install
+    go build -o medpot go/medpot.go go/logo.go && \
+    mkdir -p /etc/medpot/ && \
+	mkdir -p /var/log/medpot && \
+	cp ./template/* /etc/medpot/ && \
+	touch /var/log/medpot/medpot.log && \
+	cp medpot /usr/bin/
 
 
 # Setup user, groups and configs
