@@ -1,3 +1,5 @@
+#!/bin/env bash
+
 cd /opt/go/src/medpot/template
 mkdir /var/log/medpot
 cp ./medpot.log  /var/log/medpot/medpot.log

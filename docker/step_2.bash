@@ -1,3 +1,5 @@
+#!/bin/env bash
+
 export GOPATH=/opt/go/
 
 # Install all the requirements
