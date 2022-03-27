@@ -6,7 +6,8 @@ FROM alpine
 RUN apk -U --no-cache add build-base git go g++
 
 # Setup go, medpot
-RUN cd /tmp && \
+RUN export GOPATH=/opt/go/ && \
+    cd /tmp && \
     git clone https://github.com/s9rA16Bf4/medpot.git && \
     cd /tmp/medpot && \
     git checkout unstable && \
