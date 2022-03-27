@@ -11,7 +11,7 @@ install:
 	mkdir -p /var/log/medpot
 	cp ./template/* /etc/medpot/
 	touch /var/log/medpot/medpot.log
-	cp medpot /usr/bin/
+	cp $(BIN) /usr/bin/
 
 clean:
 	rm $(BIN)
