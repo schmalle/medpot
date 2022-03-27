@@ -6,15 +6,15 @@ FROM alpine
 RUN apk -U --no-cache add build-base git go g++
 
 # Setup go, medpot
-RUN /bin/env bash ./docker/step_2.bash
+RUN '/bin/env bash ./docker/step_2.bash'
 
-RUN /bin/env bash ./docker/step_3.bash
+RUN '/bin/env bash ./docker/step_3.bash'
 
 # Setup user, groups and configs
-RUN /bin/env bash ./docker/step_4.bash
+RUN '/bin/env bash ./docker/step_4.bash'
 
 # Clean up
-RUN /bin/env bash ./docker/step_5.bash
+RUN '/bin/env bash ./docker/step_5.bash'
 
 # Start medpot
 WORKDIR /opt/go/src/medpot
