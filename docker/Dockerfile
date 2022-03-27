@@ -3,7 +3,7 @@ FROM alpine
 # Based on Marco Ochse great Glutton / T-Pot template
 
 # Setup apk
-RUN /bin/env bash ./docker/step_1.bash
+RUN apk -U --no-cache add build-base git go g++
 
 # Setup go, medpot
 RUN /bin/env bash ./docker/step_2.bash
