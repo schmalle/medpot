@@ -17,9 +17,9 @@ RUN cd /tmp && \
     cd ../ && \
     go build -o medpot go/medpot.go go/logo.go && \
     cp medpot /usr/bin/ && \
-    mkdir /etc/medpot/ && \
+    mkdir -p /etc/medpot/ && \
     cp template/* /etc/medpot/ && \
-    mkdir /var/log/medpot && \
+    mkdir -p /var/log/medpot && \
     touch /var/log/medpot/medpot.log
 
 # Setup user, groups and configs
