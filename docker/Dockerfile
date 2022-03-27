@@ -10,8 +10,13 @@ RUN cd /tmp && \
     git clone https://github.com/s9rA16Bf4/medpot.git && \
     cd /tmp/medpot && \
     git checkout unstable && \
-    /bin/env bash /tmp/medpot/docker/step_2.bash && \
-    /bin/env bash /tmp/medpot/docker/step_3.bash
+    go get -v github.com/davecgh/go-spew/spew && \
+    go get -v github.com/go-ini/ini && \
+    go get -v github.com/mozillazg/request && \
+    go get -v go.uber.org/zap && \
+    cd ../ && \
+    bash scripts/compile_medpot.sh && \
+    cp medpot /usr/bin
 
 # Setup user, groups and configs
 RUN "/bin/env bash /tmp/medpot/docker/step_4.bash"
