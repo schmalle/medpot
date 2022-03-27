@@ -21,7 +21,7 @@ Medpot utilizes an arugment parser to be able to less static in some areas, the 
 --set_log_location, -sll <value>  | Changes the directory where the logs will be placed, default = '/var/log/medpot/'
 ```
 
-All arguments can easily be checked by passing the '-h' flag.
+All arguments can easily be checked by passing the `-h` flag.
 
 ## Templates, configuration & Logs
 Templates and configurations are located at `/etc/medpot/`
