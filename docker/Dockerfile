@@ -15,7 +15,7 @@ RUN cd /tmp && \
     go get -v github.com/mozillazg/request && \
     go get -v go.uber.org/zap && \
     cd ../ && \
-    go build -o medpot go/*.go && \
+    go build -o medpot go/medpot.go go/logo.go && \
     cp medpot /usr/bin/ && \
     mkdir /etc/medpot/ && \
     cp template/* /etc/medpot/ && \
