@@ -3,7 +3,7 @@ BIN := medpot
 compile:
 	bash scripts/compile_medpot.sh
 
-install: compile
+install:
 	mkdir -p /etc/medpot/
 	mkdir -p /var/log/medpot
 	cp ./template/* /etc/medpot/
