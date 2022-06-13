@@ -7,10 +7,13 @@ Medpot is a honeypot that tries to emulate [HL7](https://en.wikipedia.org/wiki/H
 Requires go 1.17 or newer
 
 1. Installation of dependencies can be handled by running `bash scripts/dependencies.sh`
-2. Now you can either do<br>
-    a) `bash scripts/run_medpot.sh` or `go run go/*.go` - To run the files<br>
-    b) `bash scripts/compile_medpot.sh` or  `go build -o medpot go/*.go` - To compile the files into a binary<br>
-    c) `make` and `make install` to create a copy on disk and also create all necessary files<br>
+2. Now you can either do<br/>
+    a) `bash scripts/run_medpot.sh` or `go run go/*.go` - To run the files<br/>
+    
+    b) `bash scripts/compile_medpot.sh` or  `go build -o medpot go/*.go` - To compile the files into a binary<br/>
+    
+    c) `make` and `make install` to create a copy on disk and also create all necessary files<br/>
+   
     d) `bash scripts/compile_docker.sh` to create a docker container
 3. You're done now! My suggestion is to check the arguments that you can send in to the program
 
