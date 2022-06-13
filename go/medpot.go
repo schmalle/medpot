@@ -250,7 +250,7 @@ func handleRequest(cconf_t *conf_t) {
 			cconf_t.conn.Close()
 
 			if err.Error() != "EOF" {
-				notify.Inform(err.Error())
+				notify.Inform(err.Error()) // Most likely a time out
 			}
 			break
 
