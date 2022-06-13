@@ -20,7 +20,8 @@ By default the honeypot will try to bind and listen on port `2575`
 Medpot utilizes an arugment parser to be able to less static in some areas, the supported arguments at this point of time are.<br>
 ```
 #### Definied Arguments ####
---set_logo, -sl <value>  | Allows you to pick a logo that is shown on boot, options are = 1, 2
+--help, -h | Displays all defined arguments
+--set_logo, -sl <value>  | Allows you to pick a logo that is shown on boot | options are [1, 2]
 --set_port, -sp <value>  | Allows for a different port to be used, default = 2575
 --set_log_location, -sll <value>  | Changes the directory where the logs will be placed, default = '/var/log/medpot/'
 ```
