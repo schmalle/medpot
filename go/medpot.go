@@ -39,7 +39,7 @@ const (
 	CONN_HOST       = "0.0.0.0"
 	CONN_TYPE       = "tcp"
 	VERSION         = "1.0" // Current version
-	CONFIG_LOCATION = "/etc/medpot/"
+	CONFIG_LOCATION = "/etc/medpot"
 )
 
 /*
@@ -47,7 +47,7 @@ const (
 */
 func readConfig() (string, string, string, string) {
 
-	cfg, err := ini.Load(fmt.Sprintf("%s"+"ews.cfg", CONFIG_LOCATION))
+	cfg, err := ini.Load(fmt.Sprintf("%s/ews.cfg", CONFIG_LOCATION))
 	if err != nil {
 		notify.Error(err.Error(), "medpot.readConfig()")
 	}
@@ -70,7 +70,7 @@ func post(cconf_t *conf_t, time string) {
 	c := &http.Client{Transport: tr}
 	req := request.NewRequest(c)
 
-	dat := readFile(CONFIG_LOCATION + "ews.xml")
+	dat := readFile(fmt.Sprintf("%s/ews.xml", CONFIG_LOCATION))
 	body := strings.Replace(string(dat), "_USERNAME_", cconf_t.username, -1)
 	body = strings.Replace(body, "_TOKEN_", cconf_t.password, -1)
 	body = strings.Replace(body, "_NODEID_", cconf_t.nodeID, -1)
@@ -168,7 +168,7 @@ func main() {
 	notify.Inform(fmt.Sprintf("V.%s", VERSION))
 	notify.Inform(fmt.Sprintf("Starting Medpot at %s", time.Now().Format(time.RFC822)))
 	notify.Inform("Written by @schmalle, forked and updated by @s9rA16Bf4")
-	notify.Inform("If you find any bugs, just report them on the github 'github.com/s9rA16Bf4/medpot'")
+	notify.Inform("If you find any bugs, just report them on the github 'github.com/s9rA16Bf4/medpot' or 'github.com/schmalle/medpot'")
 	notify.Inform("--------------------------------------------------------")
 	notify.Inform(fmt.Sprintf("Log files will be located at '%s'", cconf_t.log_location))
 	notify.Inform(fmt.Sprintf("Will utilize port %s", cconf_t.port))
@@ -177,7 +177,7 @@ func main() {
 
 	cconf_t.logger = initLogger(cconf_t)
 
-	l, err := net.Listen(CONN_TYPE, ":"+cconf_t.port)
+	l, err := net.Listen(CONN_TYPE, fmt.Sprintf(":%s", cconf_t.port))
 
 	if err != nil {
 		notify.Error(err.Error(), "medpot.main()")
