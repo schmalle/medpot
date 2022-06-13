@@ -70,7 +70,7 @@ func post(cconf_t *conf_t, time string) {
 	c := &http.Client{Transport: tr}
 	req := request.NewRequest(c)
 
-	dat := readFile(fmt.Sprintf("%s/ews.xml", CONFIG_LOCATION))
+	dat := readFile("ews.xml")
 	body := strings.Replace(string(dat), "_USERNAME_", cconf_t.username, -1)
 	body = strings.Replace(body, "_TOKEN_", cconf_t.password, -1)
 	body = strings.Replace(body, "_NODEID_", cconf_t.nodeID, -1)
@@ -206,7 +206,7 @@ func readFile(name string) []byte {
 
 	b1 := make([]byte, 4)
 
-	dat, err := ioutil.ReadFile(CONFIG_LOCATION + name)
+	dat, err := ioutil.ReadFile(fmt.Sprintf("%s/%s", CONFIG_LOCATION, name))
 	if err != nil {
 		notify.Warning(fmt.Sprintf("Failed to read file '%s'", name))
 		return b1
