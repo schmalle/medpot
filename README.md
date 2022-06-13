@@ -1,5 +1,7 @@
 # medpot
-Is a honeypot that tries to emulate HL7 / FHIR honeypot
+Medpot is a honeypot that tries to emulate [HL7](https://en.wikipedia.org/wiki/Health_Level_7) / [FHIR](https://en.wikipedia.org/wiki/Fast_Healthcare_Interoperability_Resources) services
+
+
 
 ## Installation
 Requires go 1.17 or newer
