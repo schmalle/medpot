@@ -38,7 +38,7 @@ type conf_t struct {
 const (
 	CONN_HOST       = "0.0.0.0"
 	CONN_TYPE       = "tcp"
-	VERSION         = "1.0" // Current version
+	VERSION         = "1.1" // Current version
 	CONFIG_LOCATION = "/etc/medpot"
 )
 
@@ -168,7 +168,7 @@ func main() {
 	notify.Inform(fmt.Sprintf("V.%s", VERSION))
 	notify.Inform(fmt.Sprintf("Starting Medpot at %s", time.Now().Format(time.RFC822)))
 	notify.Inform("Written by @schmalle, forked and updated by @s9rA16Bf4")
-	notify.Inform("If you find any bugs, just report them on the github 'github.com/s9rA16Bf4/medpot' or 'github.com/schmalle/medpot'")
+	notify.Inform("If you find any bugs, report them on 'github.com/s9rA16Bf4/medpot' or 'github.com/schmalle/medpot'")
 	notify.Inform("--------------------------------------------------------")
 	notify.Inform(fmt.Sprintf("Log files will be located at '%s'", cconf_t.log_location))
 	notify.Inform(fmt.Sprintf("Will utilize port %s", cconf_t.port))
@@ -286,7 +286,7 @@ func handleRequest(cconf_t *conf_t) {
 		}
 
 		counter++
-		notify.Inform("Increased counter to " + fmt.Sprint(counter))
+		notify.Inform(fmt.Sprintf("Increased counter to %s", fmt.Sprint(counter)))
 	}
 	notify.Warning("Maximum loop counter reached... loop will now end!")
 	cconf_t.conn.Close()
