@@ -122,7 +122,7 @@ func initLogger(cconf_t *conf_t) *zap.Logger {
 
 func main() {
 	arg.Argument_add("--help", "-h", false, "Displays all defined arguments", []string{"NULL"})
-	arg.Argument_add("--set_logo", "-sl", true, "Allows you to pick a logo that is shown on boot, options are = 1, 2", []string{"1", "2"})
+	arg.Argument_add("--set_logo", "-sl", true, "Allows you to pick a logo that is shown on boot", []string{"1", "2"})
 	arg.Argument_add("--set_port", "-sp", true, "Allows for a different port to be used, default = 2575", []string{"NULL"})
 	arg.Argument_add("--set_log_location", "-sll", true, "Changes the directory where the logs will be placed, default = '/var/log/medpot/'", []string{"NULL"})
 
