@@ -36,9 +36,9 @@ type conf_t struct {
 }
 
 const (
-	CONN_HOST   = "0.0.0.0"
-	CONN_TYPE   = "tcp"
-	VERSION = "1.0" // Current version
+	CONN_HOST       = "0.0.0.0"
+	CONN_TYPE       = "tcp"
+	VERSION         = "1.0" // Current version
 	CONFIG_LOCATION = "/etc/medpot/"
 )
 
@@ -143,7 +143,7 @@ func main() {
 		case "2":
 			current_logo = LOGO_2
 		}
-	}else{
+	} else {
 		current_logo = LOGO_2
 	}
 
@@ -153,7 +153,7 @@ func main() {
 		if err != nil {
 			notify.Error(err.Error(), "medpot.main()")
 		}
-	}else{
+	} else {
 		cconf_t.port = "2575"
 	}
 
@@ -163,7 +163,6 @@ func main() {
 		cconf_t.log_location = "/var/log/medpot/"
 	}
 	cconf_t.log_location += "medpot.log"
-
 
 	fmt.Println(current_logo) // Print the logo that will be used
 	notify.Inform(fmt.Sprintf("V.%s", VERSION))
@@ -251,7 +250,7 @@ func handleRequest(cconf_t *conf_t) {
 			cconf_t.conn.Close()
 
 			if err.Error() != "EOF" {
-				notify.Error(err.Error(), "medpot.handleRequest()")
+				notify.Inform(err.Error())
 			}
 			break
 
