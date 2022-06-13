@@ -33,6 +33,7 @@ type conf_t struct {
 	conn         net.Conn    // The active connection
 	log_location string      // Where on the disk is the log file located
 	logger       *zap.Logger // Object to our logger
+	ews          string      // Is true if we are gonna post to EWS else false
 }
 
 const (
@@ -45,7 +46,7 @@ const (
 /*
 	read config from EWS poster for DTAGs Early warning system and T-Pot
 */
-func readConfig() (string, string, string, string) {
+func readConfig() (string, string, string, string, string) {
 
 	cfg, err := ini.Load(fmt.Sprintf("%s/ews.cfg", CONFIG_LOCATION))
 	if err != nil {
@@ -57,11 +58,17 @@ func readConfig() (string, string, string, string) {
 	password := cfg.Section("EWS").Key("token").String()
 	nodeid := cfg.Section("GLASTOPFV3").Key("nodeid").String()
 	nodeid = strings.Replace(nodeid, "glastopfv3-", "medpot-", -1)
-	return target, user, password, nodeid
+	ews := cfg.Section("EWS").Key("ews").String()
+
+	return target, user, password, nodeid, ews
 
 }
 
 func post(cconf_t *conf_t, time string) {
+
+	if cconf_t.ews == "false" { // Should we post this data?
+		return
+	}
 
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
@@ -136,14 +143,12 @@ func main() {
 		os.Exit(0)
 	}
 
-	if arg.Argument_check("-sl") {
-		switch arg.Argument_get("-sl") {
-		case "1":
-			current_logo = LOGO_1
-		case "2":
-			current_logo = LOGO_2
-		}
-	} else {
+	switch arg.Argument_get("-sl") {
+	case "1":
+		current_logo = LOGO_1
+	case "2":
+		current_logo = LOGO_2
+	default:
 		current_logo = LOGO_2
 	}
 
@@ -173,7 +178,7 @@ func main() {
 	notify.Inform(fmt.Sprintf("Log files will be located at '%s'", cconf_t.log_location))
 	notify.Inform(fmt.Sprintf("Will utilize port %s", cconf_t.port))
 
-	cconf_t.target, cconf_t.username, cconf_t.password, cconf_t.nodeID = readConfig()
+	cconf_t.target, cconf_t.username, cconf_t.password, cconf_t.nodeID, cconf_t.ews = readConfig()
 
 	cconf_t.logger = initLogger(cconf_t)
 
