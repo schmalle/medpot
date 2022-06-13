@@ -11,6 +11,7 @@ install:
 	mkdir -p /var/log/medpot
 	cp ./template/* /etc/medpot/
 	touch /var/log/medpot/medpot.log
+	cp ./scripts/packet.txt /etc/medpot/
 	cp $(BIN) /usr/bin/
 
 uninstall:
