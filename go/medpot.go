@@ -8,7 +8,6 @@ import (
 	"io/ioutil"
 	"net"
 	"net/http"
-	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -39,7 +38,7 @@ type conf_t struct {
 const (
 	CONN_HOST       = "0.0.0.0"
 	CONN_TYPE       = "tcp"
-	VERSION         = "1.1" // Current version
+	VERSION         = "1.2" // Current version
 	CONFIG_LOCATION = "/etc/medpot"
 )
 
@@ -128,32 +127,25 @@ func initLogger(cconf_t *conf_t) *zap.Logger {
 }
 
 func main() {
-	arg.Argument_add("--help", "-h", false, "Displays all defined arguments", []string{"NULL"})
-	arg.Argument_add("--set_logo", "-sl", true, "Allows you to pick a logo that is shown on boot", []string{"1", "2"})
-	arg.Argument_add("--set_port", "-sp", true, "Allows for a different port to be used, default = 2575", []string{"NULL"})
-	arg.Argument_add("--set_log_location", "-sll", true, "Changes the directory where the logs will be placed, default = '/var/log/medpot/'", []string{"NULL"})
+	arg.Argument_add_with_options("--set_logo", "-sl", true, "Allows you to pick a logo that is shown on boot", []string{"1", "2"})
+	arg.Argument_add("--set_port", "-sp", true, "Allows for a different port to be used, default = 2575")
+	arg.Argument_add("--set_log_location", "-sll", true, "Changes the directory where the logs will be placed, default = '/var/log/medpot/'")
 
-	arg.Argument_parse() // Checks which arguments that can have been passed onto the program
+	parsed_flags := arg.Argument_parse() // Checks which arguments that can have been passed onto the program
 
 	cconf_t := new(conf_t)
-	var current_logo string
+	current_logo := LOGO_2
 
-	if arg.Argument_check("-h") {
-		arg.Argument_help()
-		os.Exit(0)
+	if value, entered := parsed_flags["-sl"]; entered {
+		if value == "1" {
+			current_logo = LOGO_1
+		} else {
+			current_logo = LOGO_2
+		}
 	}
 
-	switch arg.Argument_get("-sl") {
-	case "1":
-		current_logo = LOGO_1
-	case "2":
-		current_logo = LOGO_2
-	default:
-		current_logo = LOGO_2
-	}
-
-	if arg.Argument_check("-sp") {
-		cconf_t.port = arg.Argument_get("-sp")
+	if value, entered := parsed_flags["-sp"]; entered {
+		cconf_t.port = value
 		_, err := strconv.Atoi(cconf_t.port) // Checks if it's a valid port
 		if err != nil {
 			notify.Error(err.Error(), "medpot.main()")
@@ -162,8 +154,8 @@ func main() {
 		cconf_t.port = "2575"
 	}
 
-	if arg.Argument_check("-sll") {
-		cconf_t.log_location = arg.Argument_get("-sll")
+	if value, entered := parsed_flags["-sll"]; entered {
+		cconf_t.log_location = value
 	} else {
 		cconf_t.log_location = "/var/log/medpot/"
 	}
