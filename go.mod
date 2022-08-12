@@ -7,7 +7,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-ini/ini v1.67.0 // indirect
 	github.com/mozillazg/request v0.8.0 // indirect
-	github.com/s9rA16Bf4/ArgumentParser v0.0.0-20220809065903-c0bb167babcc // indirect
+	github.com/s9rA16Bf4/ArgumentParser v0.0.0-20220812064015-de28fe981aca // indirect
 	github.com/s9rA16Bf4/notify_handler v0.0.0-20220308220434-c95f1e79b7b2 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect

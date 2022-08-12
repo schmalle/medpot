@@ -23,6 +23,8 @@ github.com/s9rA16Bf4/ArgumentParser v0.0.0-20220415103352-52aa982165ae h1:BxU99m
 github.com/s9rA16Bf4/ArgumentParser v0.0.0-20220415103352-52aa982165ae/go.mod h1:NRKlnWNTdhYI+whq5u0Dx+pH/iE+NMGg/31yuWPHwaU=
 github.com/s9rA16Bf4/ArgumentParser v0.0.0-20220809065903-c0bb167babcc h1:Uo4OZlcrxra5L399UzycQmN+iIMu2dNpS6PJ1/ujKMI=
 github.com/s9rA16Bf4/ArgumentParser v0.0.0-20220809065903-c0bb167babcc/go.mod h1:NRKlnWNTdhYI+whq5u0Dx+pH/iE+NMGg/31yuWPHwaU=
+github.com/s9rA16Bf4/ArgumentParser v0.0.0-20220812064015-de28fe981aca h1:lLAIfXIJtS6b/x9tC31XqBBeHiqQk0zothqx0U2f64k=
+github.com/s9rA16Bf4/ArgumentParser v0.0.0-20220812064015-de28fe981aca/go.mod h1:NRKlnWNTdhYI+whq5u0Dx+pH/iE+NMGg/31yuWPHwaU=
 github.com/s9rA16Bf4/notify_handler v0.0.0-20220308220434-c95f1e79b7b2 h1:QPzwox6SpFhcUrTdk43kZ0WQ3IpwOnv7R7jFiDT1CZQ=
 github.com/s9rA16Bf4/notify_handler v0.0.0-20220308220434-c95f1e79b7b2/go.mod h1:QNjxlxplV4bgRq0hMkD/ssRExdUmsuqql+lRh9afWgA=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
