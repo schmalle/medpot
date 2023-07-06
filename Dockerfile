@@ -21,6 +21,7 @@ RUN cd /tmp && \
     mkdir -p /etc/medpot/ && \
 	mkdir -p /var/log/medpot && \
 	cp ./template/* /etc/medpot/ && \
+	cp ./scripts/packet.txt /etc/medpot/ && \
 	touch /var/log/medpot/medpot.log && \
 	cp medpot /usr/bin/
 
