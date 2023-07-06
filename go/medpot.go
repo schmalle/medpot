@@ -17,8 +17,9 @@ import (
 	"github.com/mozillazg/request"
 	"go.uber.org/zap"
 
-	arg "github.com/s9rA16Bf4/ArgumentParser/go/arguments"
-	"github.com/s9rA16Bf4/notify_handler/go/notify"
+	argumentparser "github.com/s9rA16Bf4/ArgumentParser"
+	gotools "github.com/s9rA16Bf4/Go-tools"
+	notify "github.com/s9rA16Bf4/notify_handler"
 )
 
 type conf_t struct {
@@ -38,18 +39,18 @@ type conf_t struct {
 const (
 	CONN_HOST       = "0.0.0.0"
 	CONN_TYPE       = "tcp"
-	VERSION         = "1.2" // Current version
+	VERSION         = "1.3" // Current version
 	CONFIG_LOCATION = "/etc/medpot"
 )
 
 /*
-	read config from EWS poster for DTAGs Early warning system and T-Pot
+read config from EWS poster for DTAGs Early warning system and T-Pot
 */
 func readConfig() (string, string, string, string, string) {
 
 	cfg, err := ini.Load(fmt.Sprintf("%s/ews.cfg", CONFIG_LOCATION))
 	if err != nil {
-		notify.Error(err.Error(), "medpot.readConfig()")
+		notify.Error(err.Error(), "medpot.readConfig()", 1)
 	}
 
 	target := cfg.Section("EWS").Key("rhost_first").String()
@@ -113,12 +114,12 @@ func initLogger(cconf_t *conf_t) *zap.Logger {
 
 	var cfg zap.Config
 	if err := json.Unmarshal(rawJSON, &cfg); err != nil {
-		notify.Error(err.Error(), "medpot.initLogger()")
+		notify.Error(err.Error(), "medpot.initLogger()", 1)
 	}
 
 	logger, err := cfg.Build()
 	if err != nil {
-		notify.Error(err.Error(), "medpot.initLogger()")
+		notify.Error(err.Error(), "medpot.initLogger()", 1)
 	}
 
 	defer logger.Sync()
@@ -127,45 +128,45 @@ func initLogger(cconf_t *conf_t) *zap.Logger {
 }
 
 func main() {
-	arg.Argument_add_with_options("--set_logo", "-sl", true, "Allows you to pick a logo that is shown on boot", []string{"1", "2"})
-	arg.Argument_add("--set_port", "-sp", true, "Allows for a different port to be used, default = 2575")
-	arg.Argument_add("--set_log_location", "-sll", true, "Changes the directory where the logs will be placed, default = '/var/log/medpot/'")
+	handler := argumentparser.Constructor(true)
+	handler.AddOptions("set_logo", "sl", true, false, "Allows you to pick a logo that is shown on boot", []string{"1", "2"})
+	handler.Add("set_port", "sp", true, false, "Allows for a different port to be used, default = 2575")
+	handler.Add("set_log_location", "sll", true, false, "Changes the directory where the logs will be placed, default = '/var/log/medpot/'")
 
-	parsed_flags := arg.Argument_parse() // Checks which arguments that can have been passed onto the program
+	parsed_result := handler.Parse() // Checks which arguments that can have been passed onto the program
 
 	cconf_t := new(conf_t)
 	current_logo := LOGO_2
+	logos := []string{LOGO_1, LOGO_2}
+	cconf_t.log_location = "/var/log/medpot/"
+	cconf_t.port = "2575"
 
-	if value, entered := parsed_flags["-sl"]; entered {
-		if value == "1" {
-			current_logo = LOGO_1
-		} else {
-			current_logo = LOGO_2
+	for key, value := range parsed_result {
+		switch key {
+		case "set_logo":
+			current_logo = logos[gotools.StringToInt(value)-1]
+
+		case "set_port":
+
+			// Checks if it's a valid port
+			if _, err := strconv.Atoi(cconf_t.port); err != nil {
+				notify.Error(err.Error(), "medpot.main()", 1)
+			} else {
+				cconf_t.port = value
+			}
+
+		case "set_log_location":
+			cconf_t.log_location = value
 		}
 	}
 
-	if value, entered := parsed_flags["-sp"]; entered {
-		cconf_t.port = value
-		_, err := strconv.Atoi(cconf_t.port) // Checks if it's a valid port
-		if err != nil {
-			notify.Error(err.Error(), "medpot.main()")
-		}
-	} else {
-		cconf_t.port = "2575"
-	}
-
-	if value, entered := parsed_flags["-sll"]; entered {
-		cconf_t.log_location = value
-	} else {
-		cconf_t.log_location = "/var/log/medpot/"
-	}
 	cconf_t.log_location += "medpot.log"
 
 	fmt.Println(current_logo) // Print the logo that will be used
 	notify.Inform(fmt.Sprintf("V.%s", VERSION))
 	notify.Inform(fmt.Sprintf("Starting Medpot at %s", time.Now().Format(time.RFC822)))
 	notify.Inform("Written by @schmalle, forked and updated by @s9rA16Bf4")
-	notify.Inform("If you find any bugs, report them on 'github.com/s9rA16Bf4/medpot' or 'github.com/schmalle/medpot'")
+	notify.Inform("If you find any bugs, report them on 'github.com/s9rA16Bf4/medpot'")
 	notify.Inform("--------------------------------------------------------")
 	notify.Inform(fmt.Sprintf("Log files will be located at '%s'", cconf_t.log_location))
 	notify.Inform(fmt.Sprintf("Will utilize port %s", cconf_t.port))
@@ -177,7 +178,7 @@ func main() {
 	l, err := net.Listen(CONN_TYPE, fmt.Sprintf(":%s", cconf_t.port))
 
 	if err != nil {
-		notify.Error(err.Error(), "medpot.main()")
+		notify.Error(err.Error(), "medpot.main()", 1)
 	}
 	// Close the listener when the application closes.
 	defer l.Close()
@@ -188,7 +189,7 @@ func main() {
 		// Listen for an incoming connection.
 		cconf_t.conn, err = l.Accept()
 		if err != nil {
-			notify.Error(err.Error(), "medpot.main()")
+			notify.Error(err.Error(), "medpot.main()", 1)
 		}
 
 		// Handle connections in a new goroutine.
@@ -197,7 +198,7 @@ func main() {
 }
 
 /*
-	reads file from both possible locations (first repo location, second location from docker install
+reads file from both possible locations (first repo location, second location from docker install
 */
 func readFile(name string) []byte {
 
